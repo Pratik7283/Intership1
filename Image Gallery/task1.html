@@ -1,0 +1,460 @@
+<!-- Use CSS to create a basic image gallery
+with thumbnail images that enlarge
+when clicked.
+
+Implement a simple image slideshow
+that automatically transitions between
+images using HTML and CSS. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+IN&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+
+        /* General styles */
+
+*{
+  margin: 0;
+  padding: 0;
+}
+.image-gallery {
+  display: flex;
+  justify-content:space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.image-container {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Popup styles */
+
+.popup img{
+    height: 50px;
+    width: 80px;
+}
+
+.popup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: space-around;
+  align-items: last baseline;
+  flex-wrap: wrap;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out; /* Smooth fade effect */
+}
+
+.popup-logo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.popup-text {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Hover effect */
+.image-container:hover .popup {
+  opacity: 1;
+}
+
+.image-container img:hover {
+    transform: scale(1.6);
+}
+
+.navbar{
+  display: flex;
+  justify-content: space-between;
+}
+
+#title{
+  padding-top: 16px;
+  font-family: "Playwrite IN", serif;
+  font-size: 48px;
+  color: white;
+}
+
+.front{
+  padding-top: 146px;
+  text-align: center;
+}
+
+.front h1{
+  font-family: 'Poppins', serif;
+  font-size: 34px;
+}
+
+.front p{
+  font-family: "Dosis", serif;
+  font-weight: 500;
+  
+}
+
+.themes a{
+  text-decoration: none;
+  color: rgba(55, 54, 54, 0.75);
+}
+
+.themes{
+  display: flex;
+  justify-content: space-around;
+  padding-top: 23px;
+  padding-bottom: 73px;
+  font-family: 'Poppins', serif;
+  font-weight: 400;
+}
+
+.themes a:hover{
+  width: 100px;
+  height: auto;
+  background-color: white;
+  color: rgb(17, 155, 241);
+  text-align: center;
+  border-radius: 18px;
+  box-shadow: 1px 2px 4px 5px rgba(35, 35, 35,0.5);
+}
+
+#input{
+  height: 33px;
+  width: 290px;
+  background-color: rgba(0, 0, 0,0.3);
+  color: white;
+  margin-top: 76px;
+  font-size: 18px;
+}
+
+.main{
+  background-image: url(beautiful-green-field-with-lilac-flowers-thin-tall-trees.jpg);
+  background-repeat: no-repeat;
+    background-position: center center;
+    background-size: max(1200px, 100vw);
+    height: 100vh;
+    position: relative;
+}
+
+.box{
+    height: 100vh;
+    width: 100%;
+    opacity: 0.7;
+    background-color: black;
+    position: absolute;
+    top: 0;
+}
+
+.front{
+  color: white;
+
+}
+
+.sec{
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.dark-mode{
+  background-color: rgb(27, 26, 26);
+  color: white;
+}
+
+#dark{
+  margin-top: 34px;
+  margin-right: 34px;
+  width: 120px;
+  height: 47px;
+  border-radius: 23px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 19px;
+}
+
+</style>
+</head>
+<body>
+
+    <div class="main">
+      <div class="box"></div>
+    </div>
+
+    <div class="sec">
+      <div class="navbar">
+        <div> <img src="right-justification_6632045.png"  height="45" alt=""></div>
+        <div id="title">Image Gallery</div>
+        <div><button id="dark" onclick="myfunc()">Dark Mode</button></div>
+      </div>
+      <div class="front">
+        <h1>Discover the world's top photographers and artists!</h1>
+        <p>Explore work from the most talented and accomplished designers ready to take on your next project</p>
+        <input id="input" type="text" placeholder="What are you looking for?">
+        <p>Trending searches</p>
+    </div>
+    </div>
+
+    <div class="themes">
+      <a class="ideas" href="">Discover</a>
+      <a class="ideas" href="">Animation</a>
+      <a class="ideas" href="">Branding</a>
+      <a class="ideas" href="">Illustration</a>
+      <a class="ideas" href="">Mobile</a>
+      <a class="ideas" href="">Print</a>
+      <a class="ideas" href="">Product Design</a>
+  </div>
+
+            <div class="image-gallery">
+                <div class="image-container">
+                  <img class="main-img" src="img1.jpg" alt="Gallery Image">
+                  <div class="popup">
+                    <img src="block.png" alt="Logo" class="popup-logo">
+                    <p class="popup-text">Huber Labs</p>
+                    <p class="followers" style="color: #fff;">89k Followers</p>
+                  </div>
+                </div>
+                <div class="image-container">
+                    <img class="main-img" src="img2.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                </div>
+                <div class="image-container">
+                    <img class="main-img" src="img3.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img4.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img5.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img6.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img7.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img8.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img9.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img10.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img11.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img12.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img13.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img14.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img15.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img16.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img17.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img18.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img19.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img20.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img21.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img22.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img23.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img24.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img25.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img26.jpg" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+                  <div class="image-container">
+                    <img class="main-img" src="img27.avif" alt="Gallery Image">
+                    <div class="popup">
+                      <img src="block.png" alt="Logo" class="popup-logo">
+                      <p class="popup-text">Huber Labs</p>
+                      <p class="followers" style="color: #fff;">89k Followers</p>
+                    </div>
+                  </div>
+            </div>
+
+
+            <script>
+              function myfunc(){
+                var element = document.body;
+                element.classList.toggle("dark-mode");
+              }
+            </script>
+
+</body>
+</html>

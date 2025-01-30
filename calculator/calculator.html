@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    .box{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 23px;
+        margin-top: 45px;
+    }
+
+    button{
+        height: 60px;
+        width: 140px;
+        color: white;
+        background-color: rgb(88, 189, 88);
+        border: none;
+        border-radius: 29px;
+        font-size: 17px;
+    }
+
+    #firstnumber{
+        height: 50px;
+        width: 260px;
+        font-size: 18px;
+    }
+
+    #secondnumber{
+        height: 50px;
+        width: 260px;
+        font-size: 18px;
+    }
+
+    #firstnumber:hover{
+        background-color: rgb(31, 30, 30);
+        color: white;
+    }
+
+    #secondnumber:hover{
+        background-color: rgb(31, 30, 30);
+        color: white;
+    }
+
+
+</style>
+<body>
+
+    <!-- ensure that the server file that is server.js must be on while using this file -->
+
+    <div class="box">
+        <h1>Sum Calculator</h1>
+        <input id="firstnumber" type="text" placeholder="Enter first number">
+        <input id="secondnumber" type="text" name="" placeholder="Enter second number">
+        <button onclick="sum()">Sum</button>
+        <div id="finalsum"></div>
+    </div>
+
+    <script>
+        async function sum(){
+            const a = document.getElementById("firstnumber").value;
+            const b = document.getElementById("secondnumber").value;
+            let ans = "";
+            if(a=="" || b==""){
+                ans = "Please enter valid inputs!"
+            }
+            
+            else{
+                const response = await fetch("http://localhost:8080/sum?a="+a+"&b="+b);
+                ans = await response.text();
+            }
+            document.getElementById("finalsum").innerHTML = ans;
+            document.getElementById("finalsum").style.fontFamily = 'Poppins';
+        }
+    </script>
+    
+</body>
+</html>
